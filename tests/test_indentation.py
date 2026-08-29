@@ -179,8 +179,8 @@ def test_padding_and_str() -> None:
     assert f'{ind_str_pad}abc' == '++++abc'
 
     with ind_str_pad.indented_context():
-        assert str(ind_str_pad) == '====  '
-        assert f'{ind_str_pad}abc' == '====  abc'
+        assert str(ind_str_pad) == '++++  '
+        assert f'{ind_str_pad}abc' == '++++  abc'
 
     # Test with padding object
     pad_obj = Indentation(word='+++', level=1)
