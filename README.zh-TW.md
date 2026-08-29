@@ -64,12 +64,15 @@ ind = Indentation()
 foods = {'fruit': ['apple', 'banana'], 'meat': ['pork', 'beef']}
 
 print('food')
+
 with ind.indented_context():
     for category, items in foods.items():
         print(f'{ind}{category}')
+
         with ind.indented_context():
             for item in items:
                 print(f'{ind}{item}')
+
         print(f'{ind}--------')
 ```
 
@@ -89,11 +92,14 @@ def main() -> None:
     foods = {'fruit': ['apple', 'banana'], 'meat': ['pork', 'beef']}
 
     print('food')
+
     with ind.indented_context():
         for category, items in foods.items():
             print(f'{ind}{category}')
+
             with ind.indented_context():
                 show_food_items(items, ind=ind)
+
             print(f'{ind}--------')
 
 
