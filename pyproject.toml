@@ -1,7 +1,7 @@
 [project]
 name = "indentoken"
 version = "1.0.0"
-description = "An intentation token which helps you manage text indentations."
+description = "An indentation token which helps you manage text indentations."
 readme = "README.md"
 authors = [
     { name = "Rockmizu", email = "Rockmizu@gmail.com" }

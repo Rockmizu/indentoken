@@ -146,7 +146,7 @@ from indentoken import Indentation
 ```python
 ind = Indentation()
 
-# Have no intentation at all initally.
+# Have no indentation at all initally.
 print(f'{ind}Line 1')  # |Line 1
 
 # Indent by 1 level.
