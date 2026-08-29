@@ -1,5 +1,5 @@
 from __future__ import annotations
 
-from .intentation import Indentation
+from .indentation import Indentation
 
 __all__ = ['Indentation']
