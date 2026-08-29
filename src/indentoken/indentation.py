@@ -6,7 +6,7 @@ import textwrap
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
 from io import StringIO
-from typing import ParamSpec, TypeVar, overload
+from typing import Any, Final, ParamSpec, TypeVar, overload
 
 from .feature_flags import INDENTOKEN_ENABLE_IT_METHOD
 
@@ -16,23 +16,32 @@ __all__ = ['Indentation']
 T = TypeVar('T')
 
 P = ParamSpec('P')
-R = TypeVar('R')
+
+# A sentinel object
+_MISSING: Final = object()
 
 
 def _wrap_print_with_post_process(
-    print_fn: Callable[P, R],
+    print_fn: Callable[P, Any],
     post_process: Callable[[str], str],
-) -> Callable[P, R]:
+) -> Callable[P, None]:
     @functools.wraps(print_fn)
-    def print_wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-        file = kwargs.pop('file', None)
-        flush = kwargs.pop('flush', False)
+    def print_wrapper(*args: P.args, **kwargs: P.kwargs) -> None:
+        file = kwargs.pop('file', _MISSING)
+        flush = kwargs.pop('flush', _MISSING)
         buffer = StringIO()
-        print_fn(*args, **kwargs, file=buffer, flush=False)  # type: ignore
+        print_fn(*args, **kwargs, file=buffer, flush=False)  # type: ignore[arg-type]
 
         text = buffer.getvalue()
         text = post_process(text)
-        return print_fn(text, end='', file=file, flush=flush)  # type: ignore
+
+        output_kwargs: dict[str, Any] = {}
+        if file is not _MISSING:
+            output_kwargs['file'] = file
+        if flush is not _MISSING:
+            output_kwargs['flush'] = flush
+
+        print_fn(text, end='', **output_kwargs)  # type: ignore[arg-type]
 
     return print_wrapper
 
@@ -174,7 +183,7 @@ class Indentation:
         """
         return textwrap.indent(text, prefix=str(self))
 
-    def fixed(self, print_fn: Callable[P, R], /) -> Callable[P, R]:
+    def fixed(self, print_fn: Callable[P, Any], /) -> Callable[P, None]:
         """
         Create a print function wrapper that applies indentation.
 
@@ -236,8 +245,8 @@ class Indentation:
     @overload
     def __call__(self, text: str, /) -> str: ...
     @overload
-    def __call__(self, print_fn: Callable[P, R], /) -> Callable[P, R]: ...
-    def __call__(self, text_or_print_fn: str | Callable[P, R], /) -> str | Callable[P, R]:
+    def __call__(self, print_fn: Callable[P, Any], /) -> Callable[P, None]: ...
+    def __call__(self, text_or_print_fn: str | Callable[P, Any], /) -> str | Callable[P, None]:
         """
         Apply the current indentation to a given text or
         wrap a print function to apply indentation to its output.
