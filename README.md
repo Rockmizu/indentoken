@@ -14,7 +14,7 @@
   * [多行文字縮排](#多行文字縮排)
   * [初始化](#初始化)
   * [填充（Padding）](#填充padding)
-  * [縮排的加法及乘法](#縮排的加法及乘法)
+  * [縮排的加法](#縮排的加法)
   * [多參數 print](#多參數-print)
 * [授權條款（License）](#授權條款license)
 
@@ -278,7 +278,7 @@ pad.dedent()  # Note that the `pad` object is changing, not `ind`.
 print(f'{ind}Line 6')  # |++++-->Line 6
 ```
 
-### 縮排的加法及乘法
+### 縮排的加法
 
 如果你臨時需要加深縮排，又不想要使用厚重的 `with` 陳述式，
 你可以直接將想要增加的縮排深度加在縮排物件上。
@@ -299,24 +299,11 @@ print(f'{ind}one level indented')  # |++-->one level indented
 print(f'{ind + 1}one level deeper, two levels indented')  # |++-->-->one level deeper, two levels indented
 ```
 
-乘法則等同於先將 `Indentation` 轉成字串後再進行字串乘法。
-注意這會包含 padding 部分：
-
-```python
-ind = Indentation(word='-->', level=2)
-print(f'{ind * 3}indented')  # |-->-->-->-->-->-->indented
-
-# Note that the padding will repeat 3 times as well.
-ind = Indentation(word='-->', level=2, padding='++')
-print(f'{ind * 3}indented')  # |++-->-->++-->-->++-->-->indented
-```
-
-`Indentation` 的加法和乘法符合交換律：
+`Indentation` 的加法符合交換律：
 
 ```python
 ind = Indentation(word='-->', level=2)
 assert ind + 1 == 1 + ind
-assert ind * 2 == 2 * ind
 ```
 
 ### 多參數 print

@@ -250,21 +250,8 @@ if INDENTOKEN_ENABLE_IT_METHOD:
         assert f'{ind}abc' == '->abc'
 
 
-def test_multiplication_and_addition() -> None:
+def test_addition() -> None:
     ind = Indentation(word='->')
-
-    # Test __mul__
-    assert ind * 3 == ''
-    with ind.indented_context():
-        assert ind * 1 == '->'
-        assert ind * 3 == '->->->'
-        assert ind * 5 == '->->->->->'
-        with ind.indented_context():
-            assert isinstance(ind * 5, str)
-            assert ind * 1 == '->->'
-            assert ind * 2 == '->->->->'
-            assert ind * 3 == '->->->->->->'
-        assert 2 * ind == '->->'
 
     # Test __add__
     assert ind + 2 == '->->'

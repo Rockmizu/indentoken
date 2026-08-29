@@ -256,38 +256,6 @@ class Indentation:
             self.apply_to,
         )
 
-    def __mul__(self, times: int, /) -> str:
-        """
-        Repeat the indentation string by a given number of times.
-
-        This method works essentially the same as the built-in `str` type.
-        Note that this repetition is based on the current
-        indentation depth (including padding).
-
-        Args:
-            times: The number of times to repeat the indentation string.
-
-        Returns:
-            The repeated indentation string.
-        """
-        return str(self) * times
-
-    def __rmul__(self, times: int, /) -> str:
-        """
-        Repeat the indentation string by a given number of times.
-
-        This method works essentially the same as the built-in `str` type.
-        Note that this repetition is based on the current
-        indentation depth (including padding).
-
-        Args:
-            times: The number of times to repeat the indentation string.
-
-        Returns:
-            The repeated indentation string.
-        """
-        return times * str(self)
-
     def __add__(self, amount: int, /) -> str:
         """
         Return a string, which is the stringified result
