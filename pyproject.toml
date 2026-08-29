@@ -3,6 +3,8 @@ name = "indentoken"
 version = "1.0.0"
 description = "An indentation token which helps you manage text indentations."
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Rockmizu", email = "Rockmizu@gmail.com" }
 ]
